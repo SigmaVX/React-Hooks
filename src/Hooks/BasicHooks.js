@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AppStore, AppStoreConsumer } from "../store/AppStore";
+import { AppStore, AppStoreConsumer } from "../Store/AppStore";
 
-const Hooks = props => {
+const BasicHooks = props => {
   // use state in a functional component
   const [count, setCount] = useState(0);
+
+  // Get Values From Store Directly With useContext
+  const store = useContext(AppStore);
+  console.log("Pulling Data From App Store: ", store);
 
   // You Can Have Multiple Use Effects - each triggering a side effect
   // They will run every time after render unless a second param is provided in an array
@@ -23,21 +27,22 @@ const Hooks = props => {
     // In This Case The Doc Title & Clean Up Only Updates To Reflect The Count When Color Is Changed
   }, [props.color]);
 
-  // Get Values From Store Directly With useContext
-  const storeValues = useContext(AppStore);
-  console.log("Pulling Data From App Store: ", storeValues);
+  const onClickHandler = props => {
+    setCount(count + 1);
+    store.updateStore({ totalClicks: store.values.totalClicks + 1 });
+  };
 
   return (
     <div>
       <p>Color Click Count: {count}</p>
-      <p>Total Clicks: {storeValues.totalClicks}</p>
+      <p>Total Clicks: {store.values.totalClicks}</p>
       {/* Get Data From Store With Consumer */}
       <AppStoreConsumer>
-        {store => <p>Lucky Text: {store.luckyText}</p>}
+        {store => <p>Lucky Text: {store.values.luckyText}</p>}
       </AppStoreConsumer>
-      <button onClick={() => setCount(count + 1)}>Add Click</button>
+      <button onClick={() => onClickHandler()}>Add Click</button>
     </div>
   );
 };
 
-export default Hooks;
+export default BasicHooks;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import BasicHooks from "./Hooks/BasicHooks";
 import useCustomHook from "./Hooks/useCustomHook";
-import { AppStoreProvider } from "./store/AppStore";
+import { AppStoreProvider } from "./Store/AppStore";
 import "./styles.css";
 
 const App = () => {

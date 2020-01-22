@@ -13,29 +13,15 @@ let store = {
 
 let AppStore = createContext(store);
 
-const updateStore = updateObject => {
-  let safeUpdateObject = {
-    ...store,
-    updateObject
-  };
-  return;
-};
-
 const AppStoreProvider = props => {
-  const [appStore, setAppStore] = useState(store);
+  const [values, setValues] = useState(store);
   const updateStore = updateObject => {
-    let safeUpdateObject = {
-      ...store,
-      updateObject
-    };
-    setAppStore;
+    console.log("Updating Store With: ", updateObject);
+    setValues({ ...values, updateObject });
   };
-
-  const providerValue = { appStore, setAppStore };
+  const appStore = { values, updateStore };
   return (
-    <AppStore.Provider value={providerValue}>
-      {props.children}
-    </AppStore.Provider>
+    <AppStore.Provider value={appStore}>{props.children}</AppStore.Provider>
   );
 };
 

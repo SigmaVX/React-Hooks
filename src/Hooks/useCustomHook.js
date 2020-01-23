@@ -16,7 +16,6 @@ const useCustomHook = props => {
 
   let background = colors[colorSpot];
   let fontColor = fontColors[colorSpot];
-
   return [background, fontColor];
 };
 

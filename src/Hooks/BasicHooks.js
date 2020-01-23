@@ -17,9 +17,7 @@ const BasicHooks = props => {
 
     // Add Optional Clean Up - Runs If You Add A Return With A Function
     // Clean Up Function Runs Every Time Before The Next Render Happens (not after the initial useEffect runs)
-    return () => {
-      setCount(0);
-    };
+    return setCount(0);
 
     // Pass Props In An Optional Array That Will Only Run Use Effect When ANY Item In The Array Change
     // Use An Empty Array To Only Run Use Effect On Load & Clanup

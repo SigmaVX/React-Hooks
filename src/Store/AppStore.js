@@ -15,6 +15,8 @@ let AppStore = createContext(store);
 
 const AppStoreProvider = props => {
   const [values, setValues] = useState(store);
+  // Update Helper For Using State As An Object
+  // Not Needed For Regular/Simple Use State Use
   const updateStore = updateObject => {
     console.log("Updating Store With: ", updateObject);
     setValues({ ...values, ...updateObject });

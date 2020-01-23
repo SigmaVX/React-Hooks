@@ -17,7 +17,7 @@ const AppStoreProvider = props => {
   const [values, setValues] = useState(store);
   const updateStore = updateObject => {
     console.log("Updating Store With: ", updateObject);
-    setValues({ ...values, updateObject });
+    setValues({ ...values, ...updateObject });
   };
   const appStore = { values, updateStore };
   return (

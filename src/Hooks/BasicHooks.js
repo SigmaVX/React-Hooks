@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppStore, AppStoreConsumer } from "../Store/AppStore";
+import useCustomHook from "../Hooks/useCustomHook";
 
-const BasicHooks = props => {
+const BasicHooks = (props) => {
   // use state in a functional component
   const [count, setCount] = useState(0);
+  const [colorReq, setColorReq] = useState(0);
+  const [background, fontColor] = useCustomHook(colorReq);
 
   // Get Values From Store Directly With useContext
   const store = useContext(AppStore);
@@ -23,22 +26,46 @@ const BasicHooks = props => {
     // Use An Empty Array To Only Run Use Effect On Load & Clanup
     // Not Including This Param Will Lead To useEffect Running Every Time
     // In This Case The Doc Title & Clean Up Only Updates To Reflect The Count When Color Is Changed
-  }, [props.color]);
+  }, [background]);
 
-  const onClickHandler = props => {
-    setCount(count + 1);
-    store.updateStore({ totalClicks: store.values.totalClicks + 1 });
+  const colorClickHandler = () => {
+    let newReq = colorReq + 1;
+    setColorReq(newReq);
+  };
+
+  const countClickHandler = () => {
+    let newCount = count + 1;
+    setCount(newCount);
+    store.updateStore({
+      totalClicks: store.values.totalClicks + 1,
+      luckyText: Math.random().toString(20).substr(2, 6)
+    });
   };
 
   return (
     <div>
+      <header style={{ background: `${background}` }}>
+        <p style={{ color: `${fontColor}` }}>{background}</p>
+      </header>
+      <h3>Add Click - Tracks Clicks With State and Context</h3>
+      <h3>Change Color - Resets Color Clicks and Updates Color</h3>
       <p>Color Click Count: {count}</p>
-      <p>Total Clicks: {store.values.totalClicks}</p>
+      <p>Total Clicks (All Colors): {store.values.totalClicks}</p>
+
       {/* Get Data From Store With Consumer */}
       <AppStoreConsumer>
-        {store => <p>Lucky Text: {store.values.luckyText}</p>}
+        {(store) => <p>Context Store Text: {store.values.luckyText}</p>}
       </AppStoreConsumer>
-      <button onClick={() => onClickHandler()}>Add Click</button>
+
+      <button onClick={countClickHandler}>
+        Add Click - Uses Context Store
+      </button>
+
+      <br />
+
+      <button onClick={colorClickHandler}>
+        Change Colors - Not Using Store
+      </button>
     </div>
   );
 };

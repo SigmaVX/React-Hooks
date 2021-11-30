@@ -1,26 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import BasicHooks from "./Hooks/BasicHooks";
-import useCustomHook from "./Hooks/useCustomHook";
 import { AppStoreProvider } from "./Store/AppStore";
+import NothingStuff from "./Components/NothingStuff";
 import "./styles.css";
 
 const App = () => {
-  const [color, setColor] = useState("red");
-  const [background, fontColor] = useCustomHook(color);
-  // const luckyColor = React.createContext("red");
+
 
   return (
-    <div className="App" style={{ color: `${color}` }}>
+    <div className="App">
       <AppStoreProvider>
-        <header style={{ background: `${background}` }}>
-          <p style={{ color: `${fontColor}` }}>{background}</p>
-        </header>
-        <BasicHooks color={color} />
-        <br />
-        <button onClick={() => setColor(color === "red" ? "blue" : "red")}>
-          Change Colors
-        </button>
+        <BasicHooks />
+        <NothingStuff />
       </AppStoreProvider>
     </div>
   );
